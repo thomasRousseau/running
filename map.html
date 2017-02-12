@@ -2,6 +2,13 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="static/style.css">
+<style>
+	html { height: 100% }
+  	body { height: 100%; margin: 0px; padding: 0px }
+  	#container { width: 100%; height: 100% }
+  	#nav { z-index: 100; position: absolute; margin: 10px 0px 0px 200px; background-color: #fff; border: 1px #000 Solid; padding: 5px; }
+  	#map { width: 100%; height: 100% }
+</style>
 <script src="https://maps.google.com/maps/api/js?sensor=false&libraries=places" type="text/javascript"></script>
 <script type="text/javascript">
 function get_current_location(callback) {
@@ -22,7 +29,7 @@ function update_location(position){
     var style = [{"featureType": "administrative","elementType": "geometry","stylers": [{"visibility": "off"}]},{"featureType": "poi","stylers": [{"visibility": "off"}]},{"featureType": "road","elementType": "labels.icon","stylers": [{"visibility": "off"}]},{"featureType": "transit","stylers": [{"visibility": "off"}]}];
     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
     map.setOptions({styles: style});
-    var image = 'static/png.png';
+    var image = 'img/png.png';
   	var dot = new google.maps.Marker({
     	position: {lat: position.coords.latitude, lng: position.coords.longitude},
     	map: map,
