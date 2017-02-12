@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="static/style.css">
+<script src="https://maps.google.com/maps/api/js?sensor=false&libraries=places" type="text/javascript"></script>
+<script type="text/javascript">
+function get_current_location(callback) {
+   if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+         callback(position);
+       });
+    }
+    else {
+       throw new Error("Your browser does not support geolocation.");     
+    }}
+function update_location(position){
+	var mapOptions = {
+        center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        zoom: 18,
+    };
+    var style = [{"featureType": "administrative","elementType": "geometry","stylers": [{"visibility": "off"}]},{"featureType": "poi","stylers": [{"visibility": "off"}]},{"featureType": "road","elementType": "labels.icon","stylers": [{"visibility": "off"}]},{"featureType": "transit","stylers": [{"visibility": "off"}]}];
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    map.setOptions({styles: style});
+    var image = 'static/png.png';
+  	var dot = new google.maps.Marker({
+    	position: {lat: position.coords.latitude, lng: position.coords.longitude},
+    	map: map,
+    	icon: image
+  	});
+};
+
+function initialize() {
+    get_current_location(update_location);
+    var options = {
+  		enableHighAccuracy: false,
+  		timeout: 500,
+  		maximumAge: 0};
+  	function error(err) {
+ 		console.warn('ERROR(' + err.code + '): ' + err.message);}
+    id = navigator.geolocation.watchPosition(update_location, error, options);
+};
+
+
+</script>
+</head>
+<body onload="initialize();">
+    <div id="container">
+        <div id="nav">Nav Menu</div>
+        <div id="map"></div>
+    </div>
+</body>
+</html>
